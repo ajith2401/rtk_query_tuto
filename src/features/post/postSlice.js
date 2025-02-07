@@ -86,7 +86,7 @@ const postSlice = createSlice({
             reducer: (state,action)=>{
             state.posts.push(action.payload)
         },
-        prepare(content,title,userId) {
+        prepare(title,content,userId) {
             return {
                 payload: {
                     id:nanoid(),

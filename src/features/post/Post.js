@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import RenderReactions from '../counter/RenderReactions';
 import { getPosts, getPostsStatus, getPostsError, fetchPosts } from './postSlice';
 import TimeAgo from './NewTimeAgo';
+import { getUserSuccess } from './userSlice';
 
 
 const Posts = () => {
@@ -11,6 +12,7 @@ const Posts = () => {
     const postError = useSelector(getPostsError)
     const postStatus = useSelector(getPostsStatus)
     const effectRan = useRef(false)
+    const users = useSelector(getUserSuccess)
 
     useEffect(() => {
         if (effectRan.current === false) {
@@ -33,6 +35,9 @@ const Posts = () => {
 
     const renderPosts = Array.isArray(posts) ? posts.map(post => (
         <div key={post.id} className='border border-r  rounded-lg bg-slate-50 box-border m-4 p-4 shadow-lg'>
+        <div className="text-left text-black">
+        <p className='text-sm'><span className='text-sm font-semibold'>Post by: </span> {users.find(user => Number(user.id) === Number(post.userId))?.name || "Unknown Author"}</p>
+       </div>
             <h1 className='text-3xl font-semibold'>{post.title}</h1>
             <p className='p-10'>{post.content || post.body}</p>
             
@@ -40,10 +45,9 @@ const Posts = () => {
               <div className="text-left">
                 <RenderReactions id={post.id} reactions={post.reactions} />
               </div>
-              <div className="text-right text-gray-400">
+              <div className="text-right text-gray-400 text-sm">
                 <TimeAgo timeStamp={post.date} />
-              </div>
-           
+              </div>  
           </div>
           
         </div>

@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addPost } from './postSlice'
+import { getUserSuccess } from './userSlice'
 
 const AddPost = () => {
+    const users = useSelector(getUserSuccess)
     const [title,setTitle] = useState('')
     const [content,setContent] = useState('')
     const [isFormOpen,setIsFormOpen] = useState(false)
+    const [userId,setUserId] = useState(null)
     const dispatch = useDispatch()
 
     const onTitleChange =(e)=>{
@@ -15,16 +18,16 @@ const AddPost = () => {
         setContent(e.target.value)
     }
 
-    const handleSubmit = (e) => {  // Add event parameter
-        e.preventDefault()  // Prevent form submission
-        
-        if (!title.trim() || !content.trim()) return  // Basic validation
-        
-        dispatch(addPost(title,content))
-        
-        setTitle('')
-        setContent('')
-      }
+    const handleSubmit = (e) => {
+      e.preventDefault()
+      if (!title.trim() || !content.trim() || !userId) return  // Add userId validation
+      dispatch(addPost(title, content, userId))  // Match prepare callback parameter order
+      setUserId('')  // Reset to empty string
+      setTitle('')
+      setContent('')
+      setIsFormOpen(false)  // Close form after submission
+  }
+
     
 
 
@@ -43,6 +46,23 @@ const AddPost = () => {
       <label className='text-xl font-semibold '>Content</label>
       <textarea type='text' value={content} onChange={onContentChange} className='w-full rounded-lg p-2'/>
       </div>
+
+      <div className='m-5'>
+      <label className='text-xl font-semibold'>Author</label>
+      {users && (
+          <select 
+              className='w-full rounded-lg p-2' 
+              value={userId} 
+              onChange={(e) => setUserId(e.target.value)}
+          >
+              <option value="">--select author--</option>
+              {users.map((user) => (
+                  <option key={user.id} value={user.id}>{user.name}</option>
+              ))}
+          </select>
+      )}
+  </div>
+
       <button type='submit' className='text-center justify-center bg-blue-500 text-white font-semibold mt-5 rounded-lg p-2'>save Post</button>
     
       </form>
