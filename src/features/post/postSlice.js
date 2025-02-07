@@ -39,23 +39,24 @@ const reactions = {
 const initialState = {
     status:'idle',
     posts: [
-        { id: 1, 
+        {  
+            id: nanoid(), 
             title: "First Post", 
-            content: "This is the content of the first post." ,
+            body: "This is the body of the first post." ,
             date : sub(new Date(), {minutes: 10}).toISOString(),
             reactions:reactions
         },
 
-        { id: 2, 
+        { id: nanoid(), 
           title: "Second Post", 
-          content: "Content of the second post goes here.",
+          body: "body of the second post goes here.",
           date : sub(new Date(), {minutes: 5 }).toISOString(),
           reactions:reactions
          },
           
-        { id: 3, 
+        { id: nanoid(), 
            title: "Third Post", 
-           content: "More content for the third post." ,
+           body: "More content for the third post." ,
            date : sub(new Date(), {minutes: 30}).toISOString(),
            reactions:reactions
     },
@@ -101,9 +102,9 @@ const postSlice = createSlice({
 
         },
         editPost: (state,action)=>{
-            const {id,content,title} = action.payload;
+            const {id,content,title, userId} = action.payload;
             const postIndex = state.posts.findIndex((post)=> post.id === id)
-            state.posts[postIndex] = {...state.posts[postIndex], content, title}
+            state.posts[postIndex] = {...state.posts[postIndex], content, title , userId}
 
         },
         removePost : (state,action)=>{
