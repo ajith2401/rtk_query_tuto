@@ -7,7 +7,7 @@ const TimeAgo = ({timeStamp}) => {
     const timeAgo = `${time} ago`
   return (
     <div>
-      <span className='text-sm'>
+      <span>
       &nbsp; {timeAgo}
       </span>
     </div>

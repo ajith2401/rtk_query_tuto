@@ -91,16 +91,14 @@ const Posts = () => {
               <div className="text-right text-gray-400 text-sm">
                 <TimeAgo timeStamp={post.date} />
               </div>  
-              <div>
-            </div>
-            {editingPostId === post.id && (
-              <AddPost 
-                post={post} 
-                isEditing={true} 
-                onClose={() => setEditingPostId(null)}
-              />
-            )}
           </div>
+          {editingPostId === post.id && (
+            <AddPost 
+              post={post} 
+              isEditing={true} 
+              onClose={() => setEditingPostId(null)}
+            />
+          )}
           </div>
     )) : null;
 
