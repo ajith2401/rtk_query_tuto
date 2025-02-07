@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div className='flex justify-center items-center min-h-screen'>
+  <div className='flex justify-center items-center min-h-screen bg-slate-600'>
     <div className='w-1/2 max-w-xl'>
       <Provider store={store}>
         <App />
@@ -15,4 +15,3 @@ root.render(
     </div>
   </div>
 );
-
